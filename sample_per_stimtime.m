@@ -77,7 +77,7 @@ for l = 1:size(z,1)
 end
 
 % create bins of receptive field stimulus times 
-figure(1)
+% figure(1)
 RF = NaN(stimrf,size(M(l),1),size(M(l),2));
 for j = 1:ncells
 %     for i = spikes{j,1}
@@ -94,8 +94,5 @@ for j = 1:ncells
     % extract the number of stimuli in each bin per neuron 
     
 end
-
-
-
 
 
