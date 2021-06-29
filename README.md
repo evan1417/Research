@@ -1,2 +1,2 @@
 # Research
-This repositorty is for code I need during research 
+This repository is for code I need during research 
