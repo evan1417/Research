@@ -68,25 +68,29 @@ end
 
 % create matrices for every x,y coordinate and plot them with a surrounding
 % group of 1's
-for l = 1:493
-    M(l) = mat2cell(zeros(232,136),232,136);
-    M{l}(z(l,1),z(l,2)) = 1;
-    M{l} = conv2(M{l},ones(8),'same');
+M = zeros(size(z,1),232,136);
+for l = 1:size(z,1)
+    M(l,z(l,1),z(l,2)) = 1;
+    M(l,:,:) = conv2(squeeze(M(l,:,:)),ones(8),'same');
 end
 
-
 % create bins of receptive field stimulus times 
-% figure(1)
+figure(1)
+RF = NaN(length(spikes),size(M(l),1),size(M(l),2));
 for j = 1:ncells
-    for i = spikes{j,1}   
-        samples = i(:,1);
+%     for i = spikes{j,1}
+        samples = spikes{j};
         [N,edges] = histcounts(samples,'BinEdges',binstimrf);
-        subplot(4,6,j);
-        imagesc(N)
-        colorbar
-    end 
+%         subplot(4,6,j);
+%         imagesc(N,[0 5])
+%         colorbar
+%         
+        RF(j,:,:) = squeeze(N*M);
+        
+        
+%     end 
     % extract the number of stimuli in each bin per neuron 
-
+    
 end
 
 
