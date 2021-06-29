@@ -50,6 +50,8 @@ stimrf = stimtime(receptive_field==1);
 ntrials = length(stimrf);
 df = diff(stimrf);
 binstimrf = stimrf;
+
+% may need to change for each data set
 binstimrf(1, 9861) = stimrf(1, 9860)+20000;
 
 
@@ -76,7 +78,7 @@ end
 
 % create bins of receptive field stimulus times 
 figure(1)
-RF = NaN(length(spikes),size(M(l),1),size(M(l),2));
+RF = NaN(stimrf,size(M(l),1),size(M(l),2));
 for j = 1:ncells
 %     for i = spikes{j,1}
         samples = spikes{j};
