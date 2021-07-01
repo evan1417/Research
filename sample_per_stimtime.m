@@ -71,24 +71,20 @@ end
 M = zeros(size(z,1),232,136);
 for l = 1:size(z,1)
     M(l,z(l,1),z(l,2)) = 1;
-    M(l,:,:) = conv2(squeeze(M(l,:,:)),ones(8),'same');
+    M(l,:,:) = conv2(squeeze(M(1,:, :)),ones(8),'same');
 end
-
-% create bins of receptive field stimulus times 
+% create bins of receptive field stimulus times
 % figure(1)
-RF = NaN(length(stimrf),size(M(1),1),size(M(1),2));
+
+RF = NaN(ntrials,size(M(l,:,:),2),size(M(l,:,:),3));
+
+
 for j = 1:ntrials
-%     for i = spikes{j,1}
-        samples = spikes{j};
-        [N,edges] = histcounts(samples,'BinEdges',binstimrf);
+    samples = spikes{k};
+    [N,edges] = histcounts(samples,'BinEdges',binstimrf);
 %         subplot(4,6,j);
 %         imagesc(N,[0 5])
 %         colorbar
-%         
-        RF(j,:,:) = squeeze(M.*N');
-        
-        
-%     end 
-    % extract the number of stimuli in each bin per neuron 
-    
+    RF(j,:,:) = squeeze(M.*N');
+    % extract the number of stimuli in each bin per neuron
 end
