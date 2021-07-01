@@ -78,13 +78,18 @@ end
 
 RF = NaN(ntrials,size(M(l,:,:),2),size(M(l,:,:),3));
 
+for k = 1:ncells
+    for j = 1:ntrials
+        samples = spikes{k};
+        [N,edges] = histcounts(samples,'BinEdges',binstimrf);
 
-for j = 1:ntrials
-    samples = spikes{k};
-    [N,edges] = histcounts(samples,'BinEdges',binstimrf);
-%         subplot(4,6,j);
-%         imagesc(N,[0 5])
-%         colorbar
-    RF(j,:,:) = pagemtimes(N,M);
-    
-end
+        RF(j,:,:) = pagemtimes(N,M);
+
+    %     subplot(4,6,j);
+    %     imagesc(N,[0 5])
+    end
+ 
+    graph1 = squeeze(sum(RF)) * (1/ntrials);
+    figure()
+    imagesc(graph1)
+end 
