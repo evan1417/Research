@@ -50,7 +50,7 @@ stimrf = stimtime(receptive_field==1);
 ntrials = length(stimrf);
 df = diff(stimrf);
 binstimrf = stimrf;
-binstimrf(1, 9861) = stimrf(1, 9860)+20000;
+binstimrf(1, 9861) = stimrf(1, 9860)+20000; % this should be changed with the updated python code
 
 
 % group up the x,y coordinates with their respective stimtime 
@@ -85,6 +85,6 @@ for j = 1:ntrials
 %         subplot(4,6,j);
 %         imagesc(N,[0 5])
 %         colorbar
-    RF(j,:,:) = squeeze(M.*N');
-    % extract the number of stimuli in each bin per neuron
+    RF(j,:,:) = pagemtimes(N,M);
+    
 end
