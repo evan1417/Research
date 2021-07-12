@@ -50,9 +50,7 @@ stimrf = stimtime(receptive_field==1);
 ntrials = length(stimrf);
 df = diff(stimrf);
 binstimrf = stimrf;
-
-% may need to change for each data set
-binstimrf(1, 9861) = stimrf(1, 9860)+20000;
+binstimrf(1, 9861) = stimrf(1, 9860)+20000; % this should be changed with the updated python code
 
 
 % group up the x,y coordinates with their respective stimtime 
@@ -73,29 +71,25 @@ end
 M = zeros(size(z,1),232,136);
 for l = 1:size(z,1)
     M(l,z(l,1),z(l,2)) = 1;
-    M(l,:,:) = conv2(squeeze(M(l,:,:)),ones(8),'same');
+    M(l,:,:) = conv2(squeeze(M(1,:, :)),ones(8),'same');
 end
+% create bins of receptive field stimulus times
+% figure(1)
 
-% create bins of receptive field stimulus times 
-figure(1)
-RF = NaN(stimrf,size(M(l),1),size(M(l),2));
-for j = 1:ncells
-%     for i = spikes{j,1}
-        samples = spikes{j};
+RF = NaN(ntrials,size(M(l,:,:),2),size(M(l,:,:),3));
+
+for k = 1:ncells
+    for j = 1:ntrials
+        samples = spikes{k};
         [N,edges] = histcounts(samples,'BinEdges',binstimrf);
-%         subplot(4,6,j);
-%         imagesc(N,[0 5])
-%         colorbar
-%         
-        RF(j,:,:) = squeeze(N*M);
-        
-        
-%     end 
-    % extract the number of stimuli in each bin per neuron 
-    
-end
 
+        RF(j,:,:) = pagemtimes(N,M);
 
-
-
-
+    %     subplot(4,6,j);
+    %     imagesc(N,[0 5])
+    end
+ 
+    graph1 = squeeze(sum(RF)) * (1/ntrials);
+    figure()
+    imagesc(graph1)
+end 
