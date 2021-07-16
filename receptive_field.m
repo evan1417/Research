@@ -3,7 +3,7 @@ clear all
 close all 
 % Get experiment parameters
 % get stim times
-open_mat = matfile('__name___CombinedVisualData.mat');
+open_mat = matfile('SynGAP1_Mouse1_CombinedVisualData.mat');
 stimon = open_mat.save_data(1,:);
 difference_stim = diff(stimon);
 stimtime = find(difference_stim>0.5)+1;
@@ -34,7 +34,7 @@ ncells = length(commonValues);
 spikes = cell(ncells,1);
 
 % get trial types 
-cam_mouse = readtable('cam_name.csv');
+cam_mouse = readtable('cam-SynGAP1-Mouse1-PerStimData-2021_Jun_22_1230.csv');
 trial_types = table2array(unique(cam_mouse(:,2))); 
 n_trial_types = length(trial_types);
 
@@ -83,8 +83,8 @@ hh = ismember(z2, bad_boys, 'rows');
 hh = double(hh); 
 
 
-for k = 1:ncells 
-
+%% creates receptive fields 
+for k = 1:ncells
     samples = spikes{k};
     [N,edges] = histcounts(samples,'BinEdges',binstimrf);
 
@@ -113,12 +113,31 @@ for k = 1:ncells
     
     graph1 = total_val * (1/20);
     
-    
-    figure(1)
+    new_test = graph1 > 1.5 * mean(mean(graph1)); 
+    degrees_covered(k) = sum(new_test, 'all');
+    filter = imgaussfilt(graph1,5.25);
+    new_filter = filter > 1.5 * mean(mean(filter));
+        
     
     % set subplot to number of spikes 
-    subplot(5,5,k);
-    imagesc(graph1)
+    figure(1)
+    subplot(7,5,k);
+    imagesc(new_test)
     colorbar
+    
+    figure(2)
+    subplot(7,5,k);
+    imagesc(graph1)
+    colorbar 
+    
+    figure(3)
+    subplot(7,5,k);
+    imagesc(filter)
+    colorbar
+    
+    figure(4)
+    subplot(7,5,k);
+    imagesc(new_filter)
+    colorbar 
     
 end 
