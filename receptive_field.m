@@ -84,7 +84,7 @@ hh = double(hh);
 
 
 %% creates receptive fields 
-for k = 1:ncells
+for k = 26
     samples = spikes{k};
     [N,edges] = histcounts(samples,'BinEdges',binstimrf);
 
@@ -120,24 +120,37 @@ for k = 1:ncells
         
     
     % set subplot to number of spikes 
-    figure(1)
-    subplot(7,5,k);
-    imagesc(new_test)
-    colorbar
-    
-    figure(2)
-    subplot(7,5,k);
-    imagesc(graph1)
-    colorbar 
-    
-    figure(3)
-    subplot(7,5,k);
+%     figure(1)
+%     subplot(7,5,k);
+%     imagesc(new_test)
+%     colorbar
+%     
+%     figure(2)
+%     subplot(7,5,k);
+%     imagesc(graph1)
+%     colorbar 
+
+    sgtitle('Syngap1 +/- Mouse Receptive Field Maps per Neuron')
+    subplot(6,5,k);
     imagesc(filter)
     colorbar
+    title(k)
+    xlabel('X')
+    ylabel('Y')
     
-    figure(4)
-    subplot(7,5,k);
-    imagesc(new_filter)
-    colorbar 
+    
+    
+    graph(k);
+    imagesc(filter)
+    colorbar
+    % title(k)
+    xlabel('X')
+    ylabel('Y')
+    title('Syngap1 +/- Mouse Receptive Field Map', 'Fontsize', 17)
+%     
+%     figure(4)
+%     subplot(7,5,k);
+%     imagesc(new_filter)
+%     colorbar 
     
 end 
